@@ -12,13 +12,14 @@
       </select>
 
       <label>장르:</label>
-      <input v-model="album.genre" required maxlength="15" />
+      <input type="text" v-model="album.genre" required maxlength="15" />
 
       <label>앨범 제목:</label>
-      <input v-model="album.title" required maxlength="30" />
+      <input type="text" v-model="album.title" required maxlength="30" />
 
       <label>아티스트:</label>
-      <input v-model="album.artist" required maxlength="20" />
+      <input type="text" v-model="album.artist" required maxlength="20" />
+
 
       <label>내용:</label>
       <textarea v-model="album.content" rows="8"></textarea>
@@ -86,3 +87,67 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+
+.album-insert {
+  max-width: 700px;
+  margin: 100px auto;
+  background-color: #fff;
+  padding: 40px 50px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="date"],
+select,
+textarea,
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  margin-top: 30px;
+  width: 100%;
+  padding: 12px;
+  background-color: darkgreen;
+  color: white;
+  border: none;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+img {
+  margin-top: 10px;
+  width: 100px;
+  height: 100px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+</style>
+

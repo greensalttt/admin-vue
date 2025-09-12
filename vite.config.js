@@ -1,5 +1,6 @@
-import { fileURLToPath, URL } from 'node:url'
+// 백엔드에서 포스트 요청시 처리
 
+import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
@@ -15,14 +16,15 @@ export default defineConfig({
     },
   },
 
-  // ✅ 추가: Spring Boot 백엔드에 프록시
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',  // 백엔드 주소
+        target: 'http://localhost:8080',
         changeOrigin: true,
         secure: false,
       }
-    }
-  },
+    },
+
+    historyApiFallback: true
+  }
 })
