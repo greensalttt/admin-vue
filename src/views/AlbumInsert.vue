@@ -78,7 +78,7 @@ export default {
         });
 
         alert('앨범 등록 성공!');
-        this.$router.push('/admin/page'); // 관리자 홈으로 리다이렉트
+        this.$router.push('/admin'); // 관리자 홈으로 리다이렉트
       } catch (err) {
         alert('앨범 등록 실패');
         console.error(err);

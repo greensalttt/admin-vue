@@ -1,23 +1,23 @@
-
 import { createRouter, createWebHistory } from 'vue-router'
+import Dashboard from '../views/Dashboard.vue'
 import AlbumInsert from '../views/AlbumInsert.vue'
-import AdminDashboard from '../views/AdminDashboard.vue'
 
 const routes = [
     {
-        path: '/admin/album',
+        path: '/',
+        name: 'Dashboard',
+        component: Dashboard
+    },
+
+    {
+        path: '/album',
         name: 'AlbumInsert',
         component: AlbumInsert
-    },
-    {
-        path: '/admin/dashboard',
-        name: 'AdminDashboard',
-        component: AdminDashboard
     }
 ]
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory('/admin/'),
     routes
 })
 
