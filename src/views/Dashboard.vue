@@ -120,11 +120,23 @@ const renderChart = (data) => {
   })
 }
 
-// 로그아웃
-const logout = () => {
+const logout = async () => {
   if (confirm('관리자 페이지를 나가시겠습니까?')) {
-    alert('로그아웃이 되어 메인페이지로 이동합니다.')
-    window.location.href = 'http://localhost:8080/admin/logout' // 실제 경로로 수정
+    try {
+      const res = await fetch('http://localhost:8080/api/admin/logout', {
+        method: 'POST',
+        credentials: 'include', // 세션 유지 위해 필요
+      });
+
+      if (res.ok) {
+        alert('로그아웃이 되어 메인페이지로 이동합니다.');
+        window.location.href = '/';
+      } else {
+        alert('로그아웃에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('로그아웃 오류:', error);
+    }
   }
 }
 
