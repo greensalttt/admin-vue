@@ -29,7 +29,8 @@
 
       <label>앨범 이미지:</label>
       <input type="file" @change="handleImageUpload" />
-      <img :src="preview" v-if="preview" width="100" />
+      <img :src="preview" alt="앨범 미리보기 이미지" v-if="preview" width="100" />
+
 
       <button type="submit">앨범 등록</button>
     </form>
@@ -55,6 +56,7 @@ export default {
       preview: null
     };
   },
+
   methods: {
     handleImageUpload(event) {
       const file = event.target.files[0];
@@ -73,19 +75,20 @@ export default {
         }
         formData.append('imgFile', this.imgFile);
 
-        await axios.post('/api/admin/album', formData, {
+        await axios.post('/api/album/write', formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
 
         alert('앨범 등록 성공!');
-        this.$router.push('/admin'); // 관리자 홈으로 리다이렉트
+        this.$router.push('/'); // 관리자 홈으로 리다이렉트
       } catch (err) {
         alert('앨범 등록 실패');
-        console.error(err);
+        console.error("에러:" + err);
       }
     }
   }
 };
+
 </script>
 
 <style scoped>

@@ -1,6 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
 import AlbumInsert from '../views/AlbumInsert.vue'
+import AlbumManage from '../views/AlbumManage.vue'
+
+
+
+
+// 페이지 이동
 
 const routes = [
     {
@@ -13,6 +19,12 @@ const routes = [
         path: '/album',
         name: 'AlbumInsert',
         component: AlbumInsert
+    },
+
+    {
+        path: '/album/manage',
+        name: 'AlbumManage',
+        component: AlbumManage
     }
 ]
 

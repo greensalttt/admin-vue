@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="adminPage-header">
-      <div class="title">관리자 대시보드</div>
+      <div class="title">관리자 대시보드 테스트</div>
       <button @click="logout" id="adminlogoutLink">로그아웃</button>
     </div>
 
@@ -20,7 +20,7 @@
         <h2>앨범 관리</h2>
         <div class="action-buttons">
           <a class="btn" href="/admin/album">앨범 업로드</a>
-          <a class="btn" href="/admin/album_manage">앨범 관리</a>
+          <a class="btn" href="/admin/album/manage">앨범 관리</a>
         </div>
 
         <h2>공연 관리</h2>
