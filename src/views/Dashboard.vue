@@ -26,7 +26,7 @@
         <h2>공연 관리</h2>
         <div class="action-buttons">
           <a class="btn" href="/admin/performance">공연 업로드</a>
-          <a class="btn" href="/admin/performance_manage">공연 관리</a>
+          <a class="btn" href="/admin/performance/manage">공연 관리</a>
         </div>
 
         <h2>게시판 관리</h2>
