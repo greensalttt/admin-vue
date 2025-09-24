@@ -17,8 +17,6 @@
               <p class="date">Released: {{ album.released }}</p>
             </div>
           </div>
-<!--          <button @click="goToEdit(album.ano)">수정</button>-->
-<!--          <button @click="deleteAlbum(album.ano)">삭제</button>-->
 
           <div class="button-group">
             <button @click="goToEdit(album.ano)">수정</button>
@@ -54,7 +52,7 @@ export default {
           });
     },
     goToEdit(ano) {
-      this.$router.push(`/admin/album_edit?ano=${ano}`);
+      this.$router.push(`/album/${ano}/edit`);
     },
     deleteAlbum(ano) {
       if (confirm("정말 삭제하시겠습니까?")) {

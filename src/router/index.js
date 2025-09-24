@@ -4,11 +4,12 @@ import AlbumInsert from '../views/AlbumInsert.vue'
 import AlbumManage from '../views/AlbumManage.vue'
 import PerformanceInsert from "@/views/PerformanceInsert.vue";
 import PerformanceManage from "@/views/PerformanceManage.vue";
+import AlbumEdit from "@/views/AlbumEdit.vue";
 
 
 
 
-// 페이지 이동
+// 겟맵핑 페이지 이동
 
 const routes = [
     {
@@ -27,6 +28,13 @@ const routes = [
         path: '/album/manage',
         name: 'AlbumManage',
         component: AlbumManage
+    },
+
+    {
+        path: '/album/:ano/edit',
+        name: 'AlbumEdit',
+        component: AlbumEdit,
+        props: true
     },
 
     {
