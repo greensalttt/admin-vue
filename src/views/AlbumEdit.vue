@@ -82,29 +82,28 @@ export default {
       successMsg: ''
     };
   },
-  mounted() {
-    this.fetchAlbum();
+  async mounted() {
+    await this.fetchAlbum();
   },
   methods: {
-    fetchAlbum() {
-      axios.get(`/api/album/${this.ano}/edit`)
-          .then(response => {
-            this.album = response.data;
-            // form 초기화
-            this.form.title = this.album.title;
-            this.form.artist = this.album.artist;
-            this.form.type = this.album.type;
-            this.form.genre = this.album.genre;
-            this.form.released = this.album.released;
-            this.form.content = this.album.content;
-            this.form.img = this.album.img;
-            this.loading = false;
-          })
-          .catch(err => {
-            console.error("앨범 정보 가져오기 오류:", err);
-            this.errorMsg = "앨범 정보를 가져오는데 실패했습니다.";
-            this.loading = false;
-          });
+    async fetchAlbum() {
+      try {
+        const response = await axios.get(`/api/album/${this.ano}/edit`);
+        this.album = response.data;
+        // form 초기화
+        this.form.title = this.album.title;
+        this.form.artist = this.album.artist;
+        this.form.type = this.album.type;
+        this.form.genre = this.album.genre;
+        this.form.released = this.album.released;
+        this.form.content = this.album.content;
+        this.form.img = this.album.img;
+        this.loading = false;
+      } catch (err) {
+        console.error("앨범 정보 가져오기 오류:", err);
+        this.errorMsg = "앨범 정보를 가져오는데 실패했습니다.";
+        this.loading = false;
+      }
     },
     onFileChange(event) {
       const file = event.target.files[0];
@@ -121,7 +120,7 @@ export default {
         alert("이미지 파일을 선택해주세요.");
       }
     },
-    submitEdit() {
+    async submitEdit() {
       // 유효성 검사 (간단히)
       if (!this.form.title.trim() || !this.form.artist.trim() /* ... 필요 시 더 검사 */) {
         this.errorMsg = "필요한 항목을 모두 입력하세요.";
@@ -140,25 +139,21 @@ export default {
       if (this.selectedFile) {
         formData.append("imgFile", this.selectedFile);
       }
-      // 선택 안 했으면 서버 쪽이 null 혹은 빈으로 처리하도록
 
-
-      axios.put(`/api/album/${this.ano}/edit`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        },
-        withCredentials: true   // 세션을 사용 중이면 필요할 수도 있음
-      })
-          .then(response => {
-            // 필요하면 다른 페이지로 이동하거나 상태 갱신
-            alert('앨범 수정 성공!');
-            this.$router.push('/album/manage'); // 관리자 홈으로 리다이렉트
-          })
-          .catch(error => {
-            console.error("수정 실패:", error);
-            this.errorMsg = error.response?.data || "수정 중 오류가 발생했습니다.";
-            this.successMsg = '';
-          });
+      try {
+        await axios.put(`/api/album/${this.ano}/edit`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          },
+          withCredentials: true
+        });
+        alert('앨범 수정 성공!');
+        this.$router.push('/album/manage');
+      } catch (error) {
+        console.error("수정 실패:", error);
+        this.errorMsg = error.response?.data || "수정 중 오류가 발생했습니다.";
+        this.successMsg = '';
+      }
     }
   }
 };

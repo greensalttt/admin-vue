@@ -7,7 +7,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import path from 'path'  // Node.js의 path 모듈
 
 export default defineConfig({
-  base: '/admin/',  // Spring Boot에서 /admin으로 접근할 수 있도록 base 경로 설정
+  base: '/admin',  // Spring Boot에서 /admin으로 접근할 수 있도록 base 경로 설정
   plugins: [
     vue(),
     vueDevTools(),

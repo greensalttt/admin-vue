@@ -42,28 +42,31 @@ export default {
     this.fetchAlbums();
   },
   methods: {
-    fetchAlbums() {
-      axios.get('/api/albums')
-          .then(res => {
-            this.albums = res.data;
-          })
-          .catch(err => {
-            console.error("앨범 불러오기 실패", err);
-          });
+    async fetchAlbums() {
+      try {
+        const res = await axios.get('/api/albums');
+        this.albums = res.data;
+      } catch (err) {
+        console.error("앨범 불러오기 실패", err);
+      }
     },
     goToEdit(ano) {
       this.$router.push(`/album/${ano}/edit`);
     },
-    deleteAlbum(ano) {
-      if (confirm("정말 삭제하시겠습니까?")) {
-        axios.post('/api/album_remove', { ano })
-            .then(() => {
-              alert("삭제 완료");
-              this.fetchAlbums();
-            })
-            .catch(() => {
-              alert("삭제 실패");
-            });
+    async deleteAlbum(ano) {
+      const confirmed = confirm("정말 삭제하시겠습니까?");
+      if (!confirmed) return;
+
+      try {
+        await axios.delete(`/api/album/${ano}/remove`, {
+          withCredentials: true,
+        });
+        alert("삭제 완료");
+        await this.fetchAlbums(); // 리스트 갱신
+        this.$router.push('/album/manage');
+      } catch (error) {
+        console.error("삭제 실패", error);
+        alert("삭제 실패");
       }
     }
   }

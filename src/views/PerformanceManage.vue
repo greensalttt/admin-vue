@@ -8,11 +8,11 @@
       </div>
 
       <div class="list">
-        <div v-if="performanceDtos.length === 0" id="noPerformance">
+        <div v-if="performances.length === 0" id="noPerformance">
           등록된 공연이 없습니다.
         </div>
 
-        <div v-for="performance in performanceDtos" :key="performance.pno" class="performance-card">
+        <div v-for="performance in performances" :key="performance.pno" class="performance-card">
           <img :src="performance.img" :alt="performance.title" />
           <div class="info">
             <p class="artist">{{ performance.artist }}</p>
@@ -22,7 +22,7 @@
           </div>
           <div class="performance-actions">
             <button @click="goToEdit(performance.pno)">수정</button>
-            <button @click="confirmRemove(performance.pno)">삭제</button>
+            <button @click="deletePerformance(performance.pno)">삭제</button>
           </div>
         </div>
       </div>
@@ -34,58 +34,49 @@
 import axios from 'axios';
 
 export default {
-  name: "PerformanceManage",
+  name: 'PerformanceManage',
   data() {
     return {
-      performanceDtos: [],
-      performanceRemoveFail: false,
-      performanceRemove: false,
-      performanceModify: false,
-      testAid: false,
+      performances: [], // 공연 리스트
     };
   },
+  created() {
+    this.fetchPerformances();
+  },
   methods: {
-    fetchPerformances() {
-      // 서버에서 공연 목록 받아오기
-      axios
-          .get("/api/performances")
-          .then((response) => {
-            this.performanceDtos = response.data;
-          })
-          .catch((error) => {
-            console.error("공연 목록 불러오기 실패:", error);
-          });
-    },
-    goToEdit(pno) {
-      this.$router.push(`/admin/performance_edit?pno=${pno}`);
-    },
-    confirmRemove(pno) {
-      if (confirm("정말 삭제하시겠습니까?")) {
-        this.removePerformance(pno);
+    // 공연 목록 불러오기
+    async fetchPerformances() {
+      try {
+        const res = await axios.get('/api/performances');
+        this.performances = res.data;
+      } catch (err) {
+        console.error("공연 목록 불러오기 실패", err);
       }
     },
-    removePerformance(pno) {
-      // 삭제 API 호출 (예시)
-      axios
-          .post("/admin/performance_remove", { pno })
-          .then(() => {
-            alert("공연 삭제가 완료되었습니다.");
-            this.fetchPerformances();
-          })
-          .catch(() => {
-            alert("공연 삭제가 실패했습니다.");
-          });
-    },
-  },
-  mounted() {
-    this.fetchPerformances();
 
-    // JSP에서 플래그를 받아서 처리하는 부분 예시 (필요하면 props 등으로 구현)
-    if (this.performanceRemoveFail) alert("공연 삭제가 실패했습니다.");
-    if (this.performanceRemove) alert("공연 삭제가 완료되었습니다.");
-    if (this.performanceModify) alert("공연 수정에 성공했습니다.");
-    if (this.testAid) alert("테스트 아이디는 삭제할 수 없습니다.");
-  },
+    // 공연 수정 페이지 이동
+    goToEdit(pno) {
+      this.$router.push(`/performance/${pno}/edit`);
+    },
+
+    // 공연 삭제
+    async deletePerformance(pno) {
+      const confirmed = confirm("정말 삭제하시겠습니까?");
+      if (!confirmed) return;
+
+      try {
+        await axios.delete(`/api/performance/${pno}/remove`, {
+          withCredentials: true,
+        });
+        alert("공연 삭제 완료");
+        await this.fetchPerformances(); // 리스트 갱신
+        this.$router.push('/performance/manage');
+      } catch (err) {
+        console.error("공연 삭제 실패", err);
+        alert("공연 삭제 실패");
+      }
+    },
+  }
 };
 </script>
 

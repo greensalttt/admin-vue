@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="adminPage-header">
-      <div class="title">관리자 대시보드 테스트</div>
+      <div class="title">관리자 대시보드</div>
       <button @click="logout" id="adminlogoutLink">로그아웃</button>
     </div>
 
@@ -31,22 +31,22 @@
 
         <h2>게시판 관리</h2>
         <div class="action-buttons two-column">
-          <a class="btn" href="/admin/board_manage">게시글 관리</a>
-          <a class="btn" href="/admin/board_hist">게시글 로그</a>
-          <a class="btn" href="/admin/comment_manage">댓글 관리</a>
-          <a class="btn" href="/admin/comment_hist">댓글 로그</a>
+          <a class="btn" href="/admin/board/manage">게시글 관리</a>
+          <a class="btn" href="/admin/board/hist">게시글 로그</a>
+          <a class="btn" href="/admin/comment/manage">댓글 관리</a>
+          <a class="btn" href="/admin/comment/hist">댓글 로그</a>
         </div>
 
         <h2>회원 관리</h2>
         <div class="action-buttons">
-          <a class="btn" href="/admin/cust_list">회원 목록</a>
-          <a class="btn" href="/admin/cust_hist">회원 로그</a>
+          <a class="btn" href="/admin/cust/list">회원 목록</a>
+          <a class="btn" href="/admin/cust/hist">회원 로그</a>
         </div>
 
         <h2>공지사항 관리</h2>
         <div class="action-buttons">
-          <a class="btn" href="/admin/notice_write">공지사항 등록</a>
-          <a class="btn" href="/admin/notice_manage">공지사항 관리</a>
+          <a class="btn" href="/admin/notice">공지사항 등록</a>
+          <a class="btn" href="/admin/notice/manage">공지사항 관리</a>
         </div>
       </div>
 
