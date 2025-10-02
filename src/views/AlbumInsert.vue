@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '@/utils/axios'
 
 export default {
   name: 'AlbumInsert',
@@ -69,18 +69,24 @@ export default {
     },
     async submitAlbum() {
       try {
+
+        if (!this.imgFile) {
+          alert('앨범 이미지를 등록해주세요.')
+          return
+        }
+
         const formData = new FormData();
         for (const key in this.album) {
           formData.append(key, this.album[key]);
         }
         formData.append('imgFile', this.imgFile);
 
-        await axios.post('/api/album/write', formData, {
+        await axios.post('/album/write', formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
 
         alert('앨범 등록 성공!');
-        this.$router.push('/'); // 관리자 홈으로 리다이렉트
+        this.$router.push('/dashboard'); // 관리자 홈으로 리다이렉트
       } catch (err) {
         alert('앨범 등록 실패');
         console.error("에러:" + err);

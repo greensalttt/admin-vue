@@ -2,7 +2,7 @@
   <div class="container">
     <div class="domestic">
       <span class="cate">
-        <router-link to="/">관리자 메인 페이지</router-link>
+        <router-link to="/dashboard">관리자 메인 페이지</router-link>
       </span>
     </div>
 
@@ -49,7 +49,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '@/utils/axios'
+
 
 export default {
   name: 'BoardManage',
@@ -66,7 +67,7 @@ export default {
     async fetchBoards() {
       this.loading = true;
       try {
-        const res = await axios.get('/api/board/manage');
+        const res = await axios.get('/board/manage');
         this.boardDtos = res.data || [];
       } catch (err) {
         console.error(err);
@@ -97,7 +98,7 @@ export default {
         formData.append('bno', bno);
         formData.append('createdBy', createdBy);
 
-        await axios.delete(`/api/board/${bno}/remove`, {
+        await axios.delete(`/board/${bno}/remove`, {
           withCredentials: true,
         });
         alert('게시글 삭제가 완료되었습니다.');

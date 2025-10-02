@@ -26,7 +26,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+
+import axios from '@/utils/axios'
+
 
 export default {
   name: 'NoticeEdit',
@@ -52,7 +54,7 @@ export default {
   methods: {
     async fetchNotice() {
       try {
-        const res = await axios.get(`/api/notice/${this.nno}/edit`);
+        const res = await axios.get(`/notice/${this.nno}/edit`);
         this.notice = res.data;
       } catch (err) {
         console.error('공지사항 불러오기 실패', err);
@@ -69,7 +71,7 @@ export default {
       }
 
       try {
-        await axios.put(`/api/notice/${this.notice.nno}/edit`, this.notice, {
+        await axios.put(`/notice/${this.notice.nno}/edit`, this.notice, {
           withCredentials: true, // 세션 필요 시
         });
         alert('공지사항 수정 완료');

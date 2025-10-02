@@ -2,7 +2,7 @@
   <div class="container">
     <div class="domestic">
       <span class="cate">
-        <router-link to="/">관리자 메인 페이지</router-link>
+        <router-link to="/dashboard">관리자 메인 페이지</router-link>
       </span>
     </div>
 
@@ -43,7 +43,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '@/utils/axios'
+
 
 export default {
   name: 'CommentHistory',
@@ -60,7 +61,7 @@ export default {
     async fetchCommentHist() {
       this.loading = true;
       try {
-        const res = await axios.get('/api/comments/hist');
+        const res = await axios.get('/comments/hist');
         this.commentHistList = res.data || [];
       } catch (error) {
         console.error('댓글 이력 로딩 실패:', error);

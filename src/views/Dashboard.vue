@@ -60,88 +60,82 @@
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue'
+<script>
 import { Chart, registerables } from 'chart.js'
+import axios from '@/utils/axios'
 
-Chart.register(...registerables)
+export default {
+  name: 'AdminDashboard',
+  data() {
+    return {
+      stats: []
+    }
+  },
+  mounted() {
+    this.fetchStats()
+  },
+  methods: {
+    async fetchStats() {
+      try {
+        const response = await axios.get('/admin/dashboard') // 인터셉터가 토큰 자동 추가
 
-const stats = ref([])
+        const data = response.data
 
-// API에서 통계 데이터 가져오기
-const fetchStats = async () => {
-  try {
-    const res = await fetch('http://localhost:8080/api/admin') // 실제 API 주소로 수정
-    const data = await res.json()
+        this.stats = [
+          { label: '회원 수', value: data.custCount },
+          { label: '게시글 수', value: data.boardCount },
+          { label: '댓글 수', value: data.commentCount },
+          { label: '앨범 수', value: data.albumCount },
+          { label: '공연 수', value: data.performanceCount },
+        ]
 
-    stats.value = [
-      { label: '회원 수', value: data.custCount },
-      { label: '게시글 수', value: data.boardCount },
-      { label: '댓글 수', value: data.commentCount },
-      { label: '앨범 수', value: data.albumCount },
-      { label: '공연 수', value: data.performanceCount },
-    ]
-
-    renderChart(data)
-  } catch (error) {
-    console.error('통계 데이터를 불러오는 데 실패했습니다:', error)
-  }
-}
-
-// 차트 렌더링
-const renderChart = (data) => {
-  const ctx = document.getElementById('donutChart')
-  new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['회원', '게시글', '댓글', '앨범', '공연'],
-      datasets: [{
-        data: [
-          data.custCount,
-          data.boardCount,
-          data.commentCount,
-          data.albumCount,
-          data.performanceCount
-        ],
-        backgroundColor: ['#3498db', '#e67e22', '#f1c40f', '#2ecc71', '#9b59b6'],
-        borderColor: '#ffffff',
-        borderWidth: 2
-      }]
+        this.renderChart(data)
+      } catch (error) {
+        console.error('통계 데이터를 불러오는 데 실패했습니다:', error)
+      }
     },
-    options: {
-      responsive: false,
-      cutout: '60%',
-      plugins: {
-        legend: {
-          position: 'bottom'
+    renderChart(data) {
+      Chart.register(...registerables)
+      const ctx = document.getElementById('donutChart')
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['회원', '게시글', '댓글', '앨범', '공연'],
+          datasets: [{
+            data: [
+              data.custCount,
+              data.boardCount,
+              data.commentCount,
+              data.albumCount,
+              data.performanceCount
+            ],
+            backgroundColor: ['#3498db', '#e67e22', '#f1c40f', '#2ecc71', '#9b59b6'],
+            borderColor: '#ffffff',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: false,
+          cutout: '60%',
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          }
         }
+      })
+    },
+    logout() {
+      if (confirm('관리자 페이지를 나가시겠습니까?')) {
+        localStorage.removeItem('adminToken')
+        alert('로그아웃이 되어 메인페이지로 이동합니다.')
+        window.location.href = '/'
       }
-    }
-  })
-}
-
-const logout = async () => {
-  if (confirm('관리자 페이지를 나가시겠습니까?')) {
-    try {
-      const res = await fetch('http://localhost:8080/api/admin/logout', {
-        method: 'POST',
-        credentials: 'include', // 세션 유지 위해 필요
-      });
-
-      if (res.ok) {
-        alert('로그아웃이 되어 메인페이지로 이동합니다.');
-        window.location.href = '/';
-      } else {
-        alert('로그아웃에 실패했습니다.');
-      }
-    } catch (error) {
-      console.error('로그아웃 오류:', error);
     }
   }
 }
-
-onMounted(fetchStats)
 </script>
+
 
 <style scoped>
 .container {
@@ -239,7 +233,7 @@ onMounted(fetchStats)
   text-decoration: none;
   font-weight: 600;
   transition: background-color 0.2s;
-  box-sizing: border-box; /* padding 포함해서 크기 계산 */
+  box-sizing: border-box;
 }
 
 .chart-container {

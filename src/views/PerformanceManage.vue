@@ -3,7 +3,7 @@
     <div id="performanceListContainer">
       <div class="domestic">
         <span class="cate">
-          <router-link to="/">관리자 메인 페이지</router-link>
+          <router-link to="/dashboard">관리자 메인 페이지</router-link>
         </span>
       </div>
 
@@ -31,23 +31,23 @@
 </template>
 
 <script>
-import axios from 'axios';
 
+import axios from '@/utils/axios'
 export default {
   name: 'PerformanceManage',
   data() {
     return {
-      performances: [], // 공연 리스트
+      performances: [],
     };
   },
   created() {
     this.fetchPerformances();
   },
   methods: {
-    // 공연 목록 불러오기
+
     async fetchPerformances() {
       try {
-        const res = await axios.get('/api/performances');
+        const res = await axios.get('/performances');
         this.performances = res.data;
       } catch (err) {
         console.error("공연 목록 불러오기 실패", err);
@@ -65,7 +65,7 @@ export default {
       if (!confirmed) return;
 
       try {
-        await axios.delete(`/api/performance/${pno}/remove`, {
+        await axios.delete(`/performance/${pno}/remove`, {
           withCredentials: true,
         });
         alert("공연 삭제 완료");

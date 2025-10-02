@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <span class="cate">
-        <router-link to="/">관리자 메인 페이지</router-link>
+        <router-link to="/dashboard">관리자 메인 페이지</router-link>
       </span>
     </div>
 
@@ -41,7 +41,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+
+import axios from '@/utils/axios'
 
 export default {
   name: 'CustHistory',
@@ -56,11 +57,10 @@ export default {
   methods: {
     async fetchHistories() {
       try {
-        const res = await axios.get('/api/cust/hist');
+        const res = await axios.get('/cust/hist');
         this.histories = res.data || [];
       } catch (err) {
         console.error('회원 이력 조회 실패:', err);
-        alert('회원 이력 정보를 불러오지 못했습니다.');
       }
     },
     formatDateTime(dateStr) {

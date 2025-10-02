@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <span class="cate">
-        <router-link to="/">관리자 메인 페이지</router-link>
+        <router-link to="/dashboard">관리자 메인 페이지</router-link>
       </span>
     </div>
 
@@ -39,7 +39,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+
+import axios from '@/utils/axios'
+
 
 export default {
   name: 'NoticeManage',
@@ -54,7 +56,7 @@ export default {
   methods: {
     async fetchNoticeList() {
       try {
-        const response = await axios.get('/api/notice/manage', { withCredentials: true });
+        const response = await axios.get('/notice/manage', { withCredentials: true });
         this.noticeList = response.data;
       } catch (error) {
         console.error('공지사항 목록 불러오기 실패', error);
@@ -67,7 +69,7 @@ export default {
       if (!confirm('정말 삭제하시겠습니까?')) return;
 
       try {
-        const response = await axios.delete(`/api/notice/${nno}/remove`, {
+        const response = await axios.delete(`/notice/${nno}/remove`, {
           withCredentials: true,
         });
         alert(response.data || '삭제 완료');

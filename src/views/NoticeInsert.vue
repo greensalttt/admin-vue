@@ -26,8 +26,10 @@
     </form>
   </div>
 </template>
-
 <script>
+
+import axios from '@/utils/axios'
+
 export default {
   name: "NoticeWrite",
   data() {
@@ -53,32 +55,21 @@ export default {
       this.loading = true;
 
       try {
-        const response = await fetch("/api/notice/write", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(this.notice),
-          credentials: "include" // 세션 유지용
+        const response = await axios.post("/notice/write", this.notice, {
+          withCredentials: true // 세션/쿠키 인증 유지
         });
 
-        if (!response.ok) {
-          const errorMsg = await response.text();
-          alert(`등록 실패: ${errorMsg}`);
-          this.loading = false;
-          return;
+        alert(response.data || "등록이 완료되었습니다.");
+        this.$router.push('/');
+      } catch (error) {
+        if (error.response) {
+          // 서버 응답이 있고, 에러 메시지를 전달하는 경우
+          alert(`등록 실패: ${error.response.data}`);
+        } else {
+          // 네트워크 에러 또는 다른 오류
+          alert("서버 오류가 발생했습니다.");
         }
-
-        const result = await response.text();
-        alert(result); // "공지사항 등록 완료"
-
-        // 등록 완료 후 초기화 또는 페이지 이동
-        // this.notice.title = "";
-        // this.notice.content = "";
-        this.$router.push('/') // 라우터 사용 시
-      } catch (err) {
-        alert("서버 오류가 발생했습니다.");
-        console.error(err);
+        console.error(error);
       } finally {
         this.loading = false;
       }
@@ -91,7 +82,6 @@ export default {
 .container {
   max-width: 700px;
   margin: 100px auto;
-  background-color: #fff;
   padding: 40px 50px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

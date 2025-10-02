@@ -53,7 +53,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+
+import axios from '@/utils/axios'
 
 export default {
   name: "AlbumEdit",
@@ -88,7 +89,7 @@ export default {
   methods: {
     async fetchAlbum() {
       try {
-        const response = await axios.get(`/api/album/${this.ano}/edit`);
+        const response = await axios.get(`/album/${this.ano}/edit`);
         this.album = response.data;
         // form 초기화
         this.form.title = this.album.title;
@@ -141,7 +142,7 @@ export default {
       }
 
       try {
-        await axios.put(`/api/album/${this.ano}/edit`, formData, {
+        await axios.put(`/album/${this.ano}/edit`, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           },

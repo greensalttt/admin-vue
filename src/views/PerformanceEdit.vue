@@ -65,7 +65,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+
+import axios from '@/utils/axios'
+
 
 export default {
   name: 'PerformanceEdit',
@@ -94,7 +96,7 @@ export default {
   async mounted() {
     const pno = this.$route.params.pno;
     try {
-      const res = await axios.get(`/api/performance/${pno}/edit`);
+      const res = await axios.get(`/performance/${pno}/edit`);
       this.performance = res.data;
       this.form.title = res.data.title;
       this.form.artist = res.data.artist;
@@ -135,7 +137,7 @@ export default {
       }
 
       const formData = new FormData();
-      // ❗ 아래부터 하나씩 명시
+
       formData.append("title", this.form.title);
       formData.append("artist", this.form.artist);
       formData.append("duration", this.form.duration);
@@ -151,7 +153,7 @@ export default {
       }
 
       try {
-        await axios.put(`/api/performance/${this.$route.params.pno}/edit`, formData, {
+        await axios.put(`/performance/${this.$route.params.pno}/edit`, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           },
@@ -208,6 +210,4 @@ export default {
   border-radius: 4px;
   cursor: pointer;
 }
-.error { color: red; }
-.success { color: green; }
 </style>

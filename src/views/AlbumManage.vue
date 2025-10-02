@@ -3,7 +3,7 @@
     <div id="albumListContainer">
       <div class="domestic">
         <span class="cate">
-          <router-link to="/">관리자 메인 페이지</router-link>
+          <router-link to="/dashboard">관리자 메인 페이지</router-link>
         </span>
       </div>
       <ul class="list">
@@ -29,8 +29,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-
+import axios from '@/utils/axios'
 export default {
   name: 'AlbumManage',
   data() {
@@ -44,7 +43,7 @@ export default {
   methods: {
     async fetchAlbums() {
       try {
-        const res = await axios.get('/api/albums');
+        const res = await axios.get('/albums');
         this.albums = res.data;
       } catch (err) {
         console.error("앨범 불러오기 실패", err);
@@ -58,7 +57,7 @@ export default {
       if (!confirmed) return;
 
       try {
-        await axios.delete(`/api/album/${ano}/remove`, {
+        await axios.delete(`/album/${ano}/remove`, {
           withCredentials: true,
         });
         alert("삭제 완료");

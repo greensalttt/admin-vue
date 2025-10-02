@@ -2,7 +2,7 @@
   <div class="container">
     <div class="domestic">
       <span class="cate">
-        <router-link to="/">관리자 메인 페이지</router-link>
+        <router-link to="/dashboard">관리자 메인 페이지</router-link>
       </span>
     </div>
 
@@ -42,7 +42,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+
+import axios from '@/utils/axios'
+
 
 export default {
   name: 'CommentManage',
@@ -59,7 +61,7 @@ export default {
     async fetchComments() {
       this.loading = true;
       try {
-        const res = await axios.get('/api/comments/manage');
+        const res = await axios.get('/comments/manage');
         this.comments = res.data;
       } catch (err) {
         console.error(err);
@@ -71,7 +73,7 @@ export default {
       if (!confirm('정말 삭제하시겠습니까?')) return;
 
       try {
-        await axios.delete(`/api/comments/${comment.cno}/remove`, {
+        await axios.delete(`/comments/${comment.cno}/remove`, {
           data: {
             cno: comment.cno,
             bno: comment.bno,

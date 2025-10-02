@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '@/utils/axios'
 
 export default {
   name: 'AdminLogin',
@@ -53,7 +53,7 @@ export default {
       }
 
       try {
-        const response = await axios.post('/api/admin/login', {
+        const response = await axios.post('/admin/login', {
           aLoginId: this.adminId,
           aPwd: this.adminPwd
         });

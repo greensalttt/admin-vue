@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <span class="cate">
-        <router-link to="/">관리자 메인 페이지</router-link>
+        <router-link to="/dashboard">관리자 메인 페이지</router-link>
       </span>
     </div>
 
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '@/utils/axios'
 
 export default {
   name: 'CustList',
@@ -63,11 +63,10 @@ export default {
   methods: {
     async fetchCustList() {
       try {
-        const res = await axios.get('/api/cust/list');
+        const res = await axios.get('/cust/list');
         this.custList = res.data || [];
       } catch (err) {
         console.error('회원 목록 조회 실패:', err);
-        alert('회원 정보를 불러오지 못했습니다.');
       }
     },
     formatDate(dateStr) {

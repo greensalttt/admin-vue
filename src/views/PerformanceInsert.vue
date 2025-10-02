@@ -43,7 +43,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+
+import axios from '@/utils/axios'
 
 export default {
   name: 'PerformanceInsert',
@@ -87,7 +88,7 @@ export default {
         }
         formData.append('imgFile', this.imgFile);
 
-        await axios.post('/api/performance/write', formData, {
+        await axios.post('/performance/write', formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
 
