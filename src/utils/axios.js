@@ -1,8 +1,10 @@
 import axios from 'axios'
 
+// 배포와 로컬 개발 환경
+
 const instance = axios.create({
-    // baseURL: 'http://localhost:8080/api',
-    baseURL: 'https://greensalt.site/api',
+    baseURL: 'http://localhost:8080/api',
+    // baseURL: 'https://greensalt.site/api',
     timeout: 5000,
 })
 
