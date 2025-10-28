@@ -141,10 +141,6 @@ export default {
   transition-duration: 0.2s;
 }
 
-#adminLogin:hover {
-  background-color: seagreen;
-}
-
 #adminTitle {
   margin-top: 20px;
   margin-bottom: 40px;
