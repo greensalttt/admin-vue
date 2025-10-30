@@ -17,9 +17,6 @@ import NoticeManage from "@/views/NoticeManage.vue";
 import NoticeEdit from "@/views/NoticeEdit.vue";
 import AdminLogin from "@/views/AdminLogin.vue";
 
-
-
-
 // 겟맵핑 페이지 이동
 
 const routes = [
