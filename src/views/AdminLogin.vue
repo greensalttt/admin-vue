@@ -1,8 +1,9 @@
+
 <template>
   <div id="loginform">
-    <h1 id="adminTitle">관리자 로그인</h1>
+    <h1 id="adminTitle">관리자 로그인 테스트</h1>
 
-    <div class="container">
+    <form class="container" @submit.prevent="submitLogin">
       <div id="adminLoginDiv">
         <input
             v-model="adminId"
@@ -29,10 +30,11 @@
         <img id="adminPwdImg" src="https://cdn-icons-png.flaticon.com/128/747/747305.png" />
       </div><br />
 
-      <button @click="submitLogin" id="adminLogin">로그인</button><br />
-    </div>
+      <button type="submit" id="adminLogin">로그인</button><br />
+    </form>
   </div>
 </template>
+
 
 <script>
 import axios from '@/utils/axios'
